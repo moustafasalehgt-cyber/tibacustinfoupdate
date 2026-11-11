@@ -312,7 +312,7 @@ async function loadSaved(){
     saved={};
     Object.entries(j.data||{}).forEach(([code,f])=>{
       const r=byCode[code]; if(!r) return;
-      missingKeys(r).forEach(k=>{ if(f[k]) (saved[code] ||= {})[k]=String(f[k]); });
+      missingKeys(r).forEach(k=>{ if(f[k]){ let v=String(f[k]).trim(); if(FIELDS[k]==="tel" && /^1\d{9}$/.test(v)) v="0"+v; (saved[code] ||= {})[k]=v; } });
     });
   }catch(e){ const b=$("bnErr"); b.textContent="⚠️ مقدرناش نحمّل البيانات المحفوظة من الشيت — اتأكد من النت وحدّث الصفحة."; b.classList.add("show"); }
 }
